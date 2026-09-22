@@ -1,13 +1,13 @@
 const CONFIG = {
-  OPC_NAME: 'Klarraum · Psychologie',
+  OPC_NAME: 'Klarraum · Psychology · 走进你的心理世界',
   OPC_KICKER: 'Psychologische Bildung · Leben in Deutschland',
   OPC_TITLE: 'Klarer sehen. Besser leben.',
-  OPC_SUBTITLE: 'Psychologische Orientierung für ein Leben zwischen Kulturen',
+  OPC_SUBTITLE: 'Psychologische Orientierung für dein Leben · 看懂自己，更好生活',
   OPC_DESCRIPTION:
     'Fundierte und verständliche Impulse zu Beziehungen, Arbeit, Identität und persönlichem Wachstum – für Menschen mit chinesischem Hintergrund in Deutschland und Europa.',
-  OPC_PRIMARY_TEXT: 'Beiträge entdecken',
+  OPC_PRIMARY_TEXT: 'Beiträge entdecken 探索',
   OPC_PRIMARY_URL: '/archive',
-  OPC_SECONDARY_TEXT: 'Über mich',
+  OPC_SECONDARY_TEXT: 'Über mich 关于我',
   OPC_SECONDARY_URL: '/about',
   OPC_STATUS_TEXT: 'Psychologische Bildung',
   OPC_CARD_TITLE: 'Klarheit im Alltag',
@@ -15,8 +15,8 @@ const CONFIG = {
     'Psychologische Bildung ersetzt keine Diagnose oder Therapie. Die Inhalte helfen, eigene Erfahrungen besser einzuordnen und nächste Schritte bewusster zu wählen.',
   OPC_NOW_TITLE: 'Themen',
   OPC_NOW_DESCRIPTION:
-    'Leben in Deutschland, Beziehungen und Kommunikation sowie Arbeit und persönliches Wachstum.',
-  OPC_NOW_ITEMS: 'Leben in Deutschland,Beziehungen & Kommunikation,Arbeit & persönliches Wachstum',
+    'Leben im Alltag, Beziehungen und Kommunikation sowie Arbeit und persönliches Wachstum.',
+  OPC_NOW_ITEMS: 'Leben im Alltag,Beziehungen & Kommunikation,Arbeit & persönliches Wachstum',
   OPC_COLOR_PRIMARY: '#2f6653',
   OPC_COLOR_BG: '#f4f8f5',
   OPC_COLOR_CARD: '#ffffff', // 浅色卡片背景
