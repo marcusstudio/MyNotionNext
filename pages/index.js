@@ -68,6 +68,24 @@ export async function getStaticProps(req) {
     page => page.type === 'Post' && page.status === 'Published'
   )
 
+  // The formal homepage is maintained in Notion. Its title/summary and body
+  // override the theme defaults while keeping a safe fallback for old data.
+  const homePage = props.allPages?.find(page =>
+    ['Startseite / 首页', 'Startseite', '首页'].includes(page.title)
+  )
+  if (homePage?.id) {
+    try {
+      const rawBlockMap = await getPostBlocks(homePage.id, 'homepage')
+      homePage.blockMap = adapterNotionBlockMap(rawBlockMap)
+      if (homePage.blockMap?.block) {
+        homePage.blockMap.block = formatNotionBlock(homePage.blockMap.block)
+      }
+      props.homePage = homePage
+    } catch (error) {
+      console.warn('[homepage] failed to load Notion homepage:', error)
+    }
+  }
+
   // 处理分页
   const POST_LIST_STYLE = siteConfig(
     'POST_LIST_STYLE',

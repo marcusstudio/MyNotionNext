@@ -347,6 +347,8 @@ const LayoutBase = ({ children }) => (
 )
 
 const LayoutIndex = props => {
+  const homeTitle = props?.homePage?.title || c('OPC_TITLE')
+  const homeDescription = props?.homePage?.summary || c('OPC_DESCRIPTION')
   const siteIcon = props?.siteInfo?.icon || siteConfig('AVATAR', '/avatar.svg', props?.NOTION_CONFIG) || '/avatar.svg'
   const siteCover = props?.siteInfo?.pageCover || siteConfig('HOME_BANNER_IMAGE', '', props?.NOTION_CONFIG)
 
@@ -365,11 +367,11 @@ const LayoutIndex = props => {
             {c('OPC_KICKER')}
           </div>
           <h1 className='max-w-3xl text-5xl font-semibold leading-[1.02] sm:text-6xl lg:text-7xl'>
-            {c('OPC_TITLE')}
+            {homeTitle}
           </h1>
           <div className='mt-5 text-xl font-semibold sm:text-2xl'>{c('OPC_SUBTITLE')}</div>
           <p className='opc-muted mt-6 max-w-2xl text-base leading-7 sm:mt-7 sm:text-lg sm:leading-8'>
-            {c('OPC_DESCRIPTION')}
+            {homeDescription}
           </p>
           <div className='mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row'>
             <ActionLink href={c('OPC_PRIMARY_URL')} primary>
@@ -403,6 +405,12 @@ const LayoutIndex = props => {
           </div>
         </aside>
       </section>
+      {props?.homePage?.blockMap && (
+        <section className='opc-panel mx-auto mb-6 max-w-6xl rounded-lg border p-5 md:p-8'>
+          <div className='opc-muted mb-4 text-xs font-semibold uppercase tracking-[0.12em]'>Notion · Startseite / 首页</div>
+          <NotionPage post={props.homePage} />
+        </section>
+      )}
       <div className='pb-10 md:pb-14'>
         <section className='opc-panel mx-auto mb-6 max-w-6xl rounded-lg border p-5 md:p-6'>
           <div className='grid gap-5 lg:grid-cols-[0.9fr_1.1fr]'>
