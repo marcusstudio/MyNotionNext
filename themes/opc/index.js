@@ -363,11 +363,9 @@ const Navigation = ({ customMenu = [], customNav = [] }) => {
       </div>
       <nav aria-label='Hauptnavigation · 主导航' className='mt-4 flex flex-wrap items-start gap-2'>
         {[
-          { href: '/', name: 'Startseite 首页' },
-          { href: '/archive', name: 'Beiträge 文章' },
-          { href: '/category', name: 'Kategorien 分类' },
-          { href: '/tag', name: 'Tags 标签' },
-          { href: '/search', name: 'Suche 搜索' }
+          { href: '/', name: 'Start首页' },
+          { href: '/search', name: 'Suche 搜索' },
+          { href: '/archive', name: 'Beiträge 文章' }
         ].map(renderLink)}
         {menus.filter(item => item.show !== false).map(item => {
           const children = item.subMenus?.filter(child => child.show !== false && child.href && !['#', '/#'].includes(child.href)) || []
