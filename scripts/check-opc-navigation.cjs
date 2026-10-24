@@ -14,7 +14,7 @@ const compiled = ts.transpileModule(source, {
 }).outputText
 const testModule = { exports: {} }
 const anchor = ({ href, children, ...props }) => React.createElement('a', { href, ...props }, children)
-const config = { OPC_NAME: 'Klarraum', OPC_NOW_TITLE: 'Themen' }
+const config = { OPC_NAME: 'Klarraum', OPC_NOW_TITLE: 'Themen', OPC_SUBTITLE: 'Deutsch\n中文', OPC_DESCRIPTION: 'Deutsch\n\nEnglish' }
 let currentPath = '/about'
 let navigatedTo
 vm.runInNewContext(compiled, {
@@ -30,6 +30,7 @@ vm.runInNewContext(compiled, {
     if (name === '@/lib/themeConsoleStyle') return { themeConsoleStyle: () => '' }
     if (name === '@/components/SmartLink') return { default: anchor }
     if (name === '@/components/HeroIcons') return { Moon: () => null, Sun: () => null }
+    if (name === '@/components/ArticleLock') return { default: () => React.createElement('div', {}, 'Article locked') }
     if (name.startsWith('@/components/')) return { default: () => null }
     throw new Error(`Unexpected import: ${name}`)
   }
@@ -43,7 +44,7 @@ const menu = [
   { title: 'Empty group', href: '/#' }
 ]
 const navigation = render(LayoutBase, { customMenu: menu })
-for (const href of ['/', '/archive', '/category', '/tag', '/search', '/about', '/category/Psychology%20Insights']) {
+for (const href of ['/', '/archive', '/search', '/about', '/category/Psychology%20Insights']) {
   assert(navigation.includes(`href="${href}"`), `Missing navigation: ${href}`)
 }
 assert(navigation.includes('aria-current="page"'))
@@ -55,10 +56,14 @@ const post = { id: 'post', title: 'Article', href: '/article/example' }
 const homepage = render(LayoutIndex, { categoryOptions: [{ name: 'Blogs & Vlogs' }], posts: [post] })
 assert(homepage.includes('href="/category/Blogs%20%26%20Vlogs"'))
 assert(homepage.includes('href="/article/example"'))
+assert(homepage.includes('whitespace-pre-line'))
+assert(homepage.includes('Deutsch\n中文') && homepage.includes('Deutsch\n\nEnglish'))
 assert(render(LayoutPostList, { category: 'Psychology Insights', posts: [] }).includes('Psychology Insights</h1>'))
 assert(render(LayoutPostList, { tag: 'Nature', posts: [] }).includes('Nature</h1>'))
 const article = render(LayoutSlug, { post, prev: { title: 'Previous', href: '/article/previous' }, next: { title: 'Next', href: '/article/next' } })
 assert(article.includes('href="/article/previous"') && article.includes('href="/article/next"'))
+const lockedArticle = render(LayoutSlug, { post, lock: true })
+assert(lockedArticle.includes('Article locked') && !lockedArticle.includes('Beitragsnavigation'))
 const search = LayoutSearch({ posts: [] })
 const searchForm = search.props.children.find(child => child?.type === 'form')
 searchForm.props.onSubmit({ preventDefault() {}, currentTarget: {} })

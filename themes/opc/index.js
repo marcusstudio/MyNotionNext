@@ -1,4 +1,5 @@
 import Comment from '@/components/Comment'
+import ArticleLock from '@/components/ArticleLock'
 import LazyImage from '@/components/LazyImage'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
@@ -413,8 +414,8 @@ const LayoutIndex = props => {
           <h1 className='max-w-3xl text-5xl font-semibold leading-[1.02] sm:text-6xl lg:text-7xl'>
             {homeTitle}
           </h1>
-          <div className='mt-5 text-xl font-semibold sm:text-2xl'>{c('OPC_SUBTITLE')}</div>
-          <p className='opc-muted mt-6 max-w-2xl text-base leading-7 sm:mt-7 sm:text-lg sm:leading-8'>
+          <div className='mt-5 whitespace-pre-line text-xl font-semibold sm:text-2xl'>{c('OPC_SUBTITLE')}</div>
+          <p className='opc-muted mt-6 max-w-2xl whitespace-pre-line text-base leading-7 sm:mt-7 sm:text-lg sm:leading-8'>
             {homeDescription}
           </p>
           <div className='mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row'>
@@ -484,7 +485,9 @@ const LayoutIndex = props => {
 const LayoutSlug = props => (
   <main className='min-h-screen px-5 py-10 md:px-10'>
     <article id='article-wrapper' className='opc-panel mx-auto max-w-3xl rounded-lg border p-6 md:p-10'>
-      {props.post ? (
+      {props.lock ? (
+        <ArticleLock {...props} />
+      ) : props.post ? (
         <>
           <NotionPage {...props} />
           <nav aria-label='Beitragsnavigation · 文章导航' className='mt-8 flex flex-wrap justify-between gap-4 border-t pt-5 text-sm'>
