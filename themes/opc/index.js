@@ -26,28 +26,6 @@ const ActionLink = ({ href, children, primary }) => (
   </SmartLink>
 )
 
-const WorkStep = ({ step, name, detail }) => (
-  <div className='opc-portal-card rounded-md border p-4'>
-    <div className='opc-status inline-flex rounded-md px-2 py-1 text-xs font-medium'>{step}</div>
-    <div className='mt-3 text-sm font-semibold'>{name}</div>
-    <div className='opc-muted mt-2 text-sm leading-6'>{detail}</div>
-  </div>
-)
-
-const WorkflowNote = () => (
-  <div className='opc-method rounded-md border p-4 md:p-5'>
-    <div className='text-sm font-semibold'>协作方法</div>
-    <p className='opc-muted mt-2 text-sm leading-6'>
-      每个 AI 项目都按一间小公司启动：总监定方向，助理管交接，策划、市场、美术、技术分别推进，最后由总监验收和派发下一步。
-    </p>
-    <div className='mt-3 flex flex-wrap gap-2 text-xs'>
-      {['一轮一任务', '文档先交接', '人只做监督修正'].map(item => (
-        <span key={item} className='opc-status rounded-md px-2.5 py-1'>{item}</span>
-      ))}
-    </div>
-  </div>
-)
-
 const OpcFooter = () => (
   <footer className='opc-footer px-5 pb-8 text-xs md:px-10'>
     <div className='mx-auto flex max-w-6xl flex-col gap-2 border-t pt-5 sm:flex-row sm:items-center sm:justify-between'>
@@ -181,7 +159,6 @@ const SiteCover = ({ src, title }) => {
 const NowPanel = ({ categoryOptions = [] }) => (
   <section className='opc-panel mx-auto max-w-6xl rounded-lg border p-5 md:p-6'>
     <div>
-      <div className='opc-muted text-sm'>近期方向</div>
       <h2 className='mt-1 text-xl font-semibold'>{c('OPC_NOW_TITLE')}</h2>
     </div>
     <p className='opc-muted mt-4 text-sm leading-6'>{c('OPC_NOW_DESCRIPTION')}</p>
@@ -406,16 +383,13 @@ const LayoutIndex = props => {
 
   return (
     <main className='min-h-screen overflow-hidden px-5 py-6 md:px-10'>
-      <section className='mx-auto grid min-h-[calc(100vh-72px)] max-w-6xl items-center gap-8 py-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16 lg:py-12'>
+      <section className='mx-auto grid max-w-6xl items-start gap-6 py-4 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-6'>
         <div>
-          <div className='opc-kicker mb-6 inline-flex rounded-md border px-3 py-2 text-xs font-medium tracking-[0.12em]'>
-            {c('OPC_KICKER')}
-          </div>
           <h1 className='max-w-3xl text-5xl font-semibold leading-[1.02] sm:text-6xl lg:text-7xl'>
             {homeTitle}
           </h1>
           <div className='mt-5 whitespace-pre-line text-xl font-semibold sm:text-2xl'>{c('OPC_SUBTITLE')}</div>
-          <p className='opc-muted mt-6 max-w-2xl whitespace-pre-line text-base leading-7 sm:mt-7 sm:text-lg sm:leading-8'>
+          <p className='opc-muted mt-4 max-w-2xl whitespace-pre-line text-base leading-7'>
             {homeDescription}
           </p>
           <div className='mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row'>
@@ -450,16 +424,6 @@ const LayoutIndex = props => {
         </section>
       )}
       <div className='pb-10 md:pb-14'>
-        <section className='opc-panel mx-auto mb-6 max-w-6xl rounded-lg border p-5 md:p-6'>
-          <div className='grid gap-5 lg:grid-cols-[0.9fr_1.1fr]'>
-            <WorkflowNote />
-            <div className='grid gap-3 sm:grid-cols-3'>
-              <WorkStep step='01' name='判断方向' detail='筛选值得投入的方向，定义目标和边界。' />
-              <WorkStep step='02' name='分配任务' detail='让多个 AI 组织彼此交接任务，自动产内容、做原型和跑策略。' />
-              <WorkStep step='03' name='监督修正' detail='人只监督结果，在关键时刻修正方向，不再做流程卡点。' />
-            </div>
-          </div>
-        </section>
         <NowPanel categoryOptions={props.categoryOptions} />
         <section className='opc-panel mx-auto mt-6 max-w-6xl rounded-lg border p-5 md:p-6'>
           <div className='mb-5 flex flex-wrap items-center justify-between gap-3'>
