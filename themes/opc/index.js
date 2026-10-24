@@ -52,7 +52,7 @@ const OpcFooter = () => (
   <footer className='opc-footer px-5 pb-8 text-xs md:px-10'>
     <div className='mx-auto flex max-w-6xl flex-col gap-2 border-t pt-5 sm:flex-row sm:items-center sm:justify-between'>
       <div className='opc-muted'>
-        由 <SmartLink href='https://qizhang.vercel.app/about/'>About Me</SmartLink> Exploration Never Ends
+        <SmartLink href='https://qizhang.vercel.app/about/'>About Me</SmartLink> Exploration Never Ends
       </div>
       <div className='flex flex-wrap gap-3'>
         <SmartLink href='https://soulstudio.vercel.app/'>中文版</SmartLink>
@@ -423,13 +423,6 @@ const LayoutIndex = props => {
               {c('OPC_PRIMARY_TEXT')}
             </ActionLink>
             <ActionLink href={c('OPC_SECONDARY_URL')}>{c('OPC_SECONDARY_TEXT')}</ActionLink>
-          </div>
-          <div className='mt-6 flex flex-wrap gap-2 text-xs sm:mt-8'>
-            {['独立开发', '开源维护', '长期写作'].map(item => (
-              <span key={item} className='opc-secondary-action rounded-md border px-3 py-2'>
-                {item}
-              </span>
-            ))}
           </div>
         </div>
 
