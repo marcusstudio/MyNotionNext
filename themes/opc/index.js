@@ -332,7 +332,7 @@ const Navigation = ({ customMenu = [], customNav = [] }) => {
   )
 
   return (
-    <header className='mx-auto max-w-6xl px-5 pt-6 md:px-10'>
+    <header className='mx-auto max-w-[1232px] px-5 pt-6 md:px-10'>
       <div className='flex flex-wrap items-center justify-between gap-4'>
         <SmartLink href='/' className='text-sm font-semibold tracking-[0.12em]'>
           {c('OPC_NAME')}
@@ -383,7 +383,7 @@ const LayoutIndex = props => {
 
   return (
     <main className='min-h-screen overflow-hidden px-5 py-6 md:px-10'>
-      <section className='mx-auto grid max-w-6xl items-start gap-6 py-4 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-6'>
+      <section className='mx-auto mb-4 grid max-w-6xl items-start gap-6 py-4 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-6'>
         <div>
           <h1 className='max-w-3xl text-5xl font-semibold leading-[1.02] sm:text-6xl lg:text-7xl'>
             {homeTitle}
