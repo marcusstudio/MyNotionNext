@@ -2,7 +2,7 @@ const CONFIG = {
   OPC_NAME: 'Klarraum · Psychology · 走进你的心理世界',
   OPC_KICKER: 'Psychologische Bildung · Leben in Deutschland',
   OPC_TITLE: 'Klarer sehen. Besser leben.',
-  OPC_SUBTITLE: 'Psychologische Orientierung für dein Leben · 看懂自己，更好生活',
+  OPC_SUBTITLE: 'Psychologische Orientierung für dein Leben · 看懂自己 更好生活',
   OPC_DESCRIPTION:
     'Manchmal braucht es nur einen neuen Blickwinkel, um festgefahrene Gedanken zu lösen. Ob im Beruf, in Beziehungen oder im Umgang mit uns selbst – hier geht es darum, sich selbst und andere besser zu verstehen, innere Klarheit zu gewinnen und das Leben bewusster und erfüllter zu gestalten.
     
