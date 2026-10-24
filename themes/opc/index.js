@@ -30,7 +30,7 @@ const OpcFooter = () => (
   <footer className='opc-footer px-5 pb-8 text-xs md:px-10'>
     <div className='mx-auto flex max-w-6xl flex-col gap-2 border-t pt-5 sm:flex-row sm:items-center sm:justify-between'>
       <div className='opc-muted'>
-        <SmartLink href='https://qizhang.vercel.app/about/'>About Me</SmartLink> Exploration Never Ends
+        <SmartLink href='https://qizhang.vercel.app/about/'>About the Author</SmartLink> Exploration Never Ends
       </div>
       <div className='flex flex-wrap gap-3'>
         <SmartLink href='https://soulstudio.vercel.app/'>中文版</SmartLink>
@@ -476,26 +476,26 @@ const LayoutPostList = props => {
 const LayoutSearch = props => {
   const router = useRouter()
   return (
-  <PageShell title='搜索结果' description={props.keyword ? `关键词：${props.keyword}` : '站内搜索结果。'}>
+  <PageShell title='Search Results' description={props.keyword ? `关键词：${props.keyword}` : 'Site Search Results.'}>
     <form className='mb-6 flex gap-2' onSubmit={event => {
       event.preventDefault()
       const keyword = String(new FormData(event.currentTarget).get('keyword') || '').trim()
       if (keyword) router.push(`/search/${encodeURIComponent(keyword)}`)
     }}>
       <input key={props.keyword} type='search' name='keyword' aria-label='Suchbegriff · 搜索关键词' defaultValue={props.keyword || ''} required className='opc-secondary-action min-w-0 flex-1 rounded-md border px-3 py-2' />
-      <button type='submit' className='opc-primary-action rounded-md px-4 py-2'>Suche 搜索</button>
+      <button type='submit' className='opc-primary-action rounded-md px-4 py-2'>Suche</button>
     </form>
     <div id='posts-wrapper' className='grid gap-4'>
       {(props.posts || []).length > 0
         ? props.posts.map(post => <PostCard key={post.id || post.slug || post.title} post={post} />)
-        : <EmptyState title='没有找到匹配内容' />}
+        : <EmptyState title='No matching content found' />}
     </div>
   </PageShell>
   )
 }
 
 const LayoutArchive = props => (
-  <PageShell title='归档' description='按时间整理的长期记录。'>
+  <PageShell title='Articles' description='Chronological Long-Term Records.'>
     <div className='grid gap-6'>
       {Object.keys(props.archivePosts || {}).length > 0
         ? Object.keys(props.archivePosts).map(year => (
@@ -512,7 +512,7 @@ const LayoutArchive = props => (
 )
 
 const LayoutCategoryIndex = props => (
-  <PageShell title='分类' description='按主题浏览文章。'>
+  <PageShell title='Categories' description='Browse Articles by Topic.'>
     <div className='flex flex-wrap gap-3'>
       {(props.categoryOptions || []).map(category => (
         <SmartLink key={category.name} href={`/category/${category.name}`} className='opc-secondary-action rounded-md border px-4 py-2 text-sm'>
@@ -524,7 +524,7 @@ const LayoutCategoryIndex = props => (
 )
 
 const LayoutTagIndex = props => (
-  <PageShell title='标签' description='按标签浏览文章。'>
+  <PageShell title='Tags' description='Browse Articles by Tag.'>
     <div className='flex flex-wrap gap-3'>
       {(props.tagOptions || []).map(tag => (
         <SmartLink key={tag.name} href={`/tag/${encodeURIComponent(tag.name)}`} className='opc-secondary-action rounded-md border px-4 py-2 text-sm'>
@@ -536,7 +536,7 @@ const LayoutTagIndex = props => (
 )
 
 const Layout404 = () => (
-  <PageShell title='页面不存在' description='这个地址没有找到对应内容。'>
+  <PageShell title='Page Not Found' description='No content was found for this URL.'>
     <ActionLink href='/' primary>返回首页</ActionLink>
   </PageShell>
 )
