@@ -339,14 +339,14 @@ const Navigation = ({ customMenu = [], customNav = [] }) => {
         </SmartLink>
         <span className='opc-status rounded-md px-2.5 py-1 text-xs font-medium'>{c('OPC_STATUS_TEXT')}</span>
       </div>
-      <nav aria-label='Hauptnavigation · 主导航' className='mt-4 flex flex-wrap items-stretch gap-2 [&>a]:flex-1 [&>a]:text-center [&>a]:whitespace-nowrap [&>details]:flex-1 [&>details]:text-center'>
+      <nav aria-label='Hauptnavigation · 主导航' className='mt-4 flex flex-wrap items-start gap-2 [&>a]:flex-1 [&>a]:text-center [&>a]:whitespace-nowrap [&>details]:flex-1 [&>details]:text-center'>
         {menus.filter(item => item.show !== false).map(item => {
           const children = item.subMenus?.filter(child => child.show !== false && child.href && !['#', '/#'].includes(child.href)) || []
           if (children.length > 0) {
             return (
-              <details key={item.id || item.name || item.title} className='opc-panel rounded-md border p-2'>
+              <details key={item.id || item.name || item.title} className='opc-panel relative rounded-md border p-2'>
                 <summary className='cursor-pointer px-1 text-sm'>{item.name || item.title}</summary>
-                <div className='mt-3 flex max-w-xs flex-col gap-2'>
+                <div className='opc-panel absolute right-0 top-full z-50 mt-2 flex w-64 flex-col gap-2 rounded-md border p-3 shadow-xl'>
                   {item.href && !['#', '/#'].includes(item.href) && renderLink(item)}
                   {children.map(renderLink)}
                 </div>
