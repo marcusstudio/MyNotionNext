@@ -1,15 +1,15 @@
 const CONFIG = {
-  OPC_NAME: 'Klarraum · Psychology · 走进你的心理世界',
-  OPC_KICKER: 'Psychologische Bildung · Leben in Deutschland',
+  OPC_NAME: 'Klarraum · Psychology · 走进你的心理世界 · 看懂自己更好生活',
+  //OPC_KICKER: "Psychotherapie · Psychotherapy · Psychological Counseling · 心理咨询",
   OPC_TITLE: 'Klarer sehen. Besser leben.',
-  OPC_SUBTITLE: 'Psychologische Orientierung für dein Leben\n看懂自己 更好生活',
+  OPC_SUBTITLE: 'Psychologische Orientierung für dein Leben',
   OPC_DESCRIPTION:
     "Manchmal braucht es nur einen neuen Blickwinkel, um festgefahrene Gedanken zu lösen. Ob im Beruf, in Beziehungen oder im Umgang mit uns selbst – hier geht es darum, sich selbst und andere besser zu verstehen, innere Klarheit zu gewinnen und das Leben bewusster und erfüllter zu gestalten.\n\nSometimes, all it takes is a fresh perspective to break free from what holds us back. Whether it's work, relationships, or our own inner struggles, this is a space to better understand ourselves and others, find clarity, and live a more conscious and fulfilling life.",
-  OPC_PRIMARY_TEXT: 'Beiträge entdecken 探索',
+  OPC_PRIMARY_TEXT: 'Beiträge entdecken探索',
   OPC_PRIMARY_URL: '/archive',
-  OPC_SECONDARY_TEXT: 'Über mich 关于我',
+  OPC_SECONDARY_TEXT: 'About Me关于我',
   OPC_SECONDARY_URL: '/about',
-  OPC_STATUS_TEXT: 'Psychologische Bildung',
+  OPC_STATUS_TEXT: 'Psychotherapie · Psychotherapy · Psychological Counseling · 心理咨询',
   OPC_CARD_TITLE: 'Klarheit im Alltag',
   OPC_CARD_DESCRIPTION:
     'Psychologische Bildung ersetzt keine Diagnose oder Therapie. Die Inhalte helfen, eigene Erfahrungen besser einzuordnen und nächste Schritte bewusster zu wählen.',
