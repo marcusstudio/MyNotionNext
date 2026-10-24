@@ -439,7 +439,7 @@ const LayoutIndex = props => {
           <div className='opc-divider flex items-center gap-4 border-b pb-5'>
             <SiteIcon icon={siteIcon} title={c('OPC_TITLE')} />
             <div>
-              <div className='opc-muted text-sm'>自动工作台</div>
+              <div className='opc-muted text-sm'>Unser gemeinsames Ziel</div>
               <div className='mt-1 text-xl font-semibold'>{c('OPC_CARD_TITLE')}</div>
             </div>
           </div>
@@ -447,7 +447,7 @@ const LayoutIndex = props => {
           <SiteCover src={siteCover} title={c('OPC_TITLE')} />
 
           <div className='opc-divider border-t pt-5'>
-            <div className='mb-2 text-sm font-semibold'>我的角色</div>
+            <div className='mb-2 text-sm font-semibold'>Meine Rolle</div>
             <p className='opc-muted text-sm leading-6'>{c('OPC_CARD_DESCRIPTION')}</p>
           </div>
         </aside>
