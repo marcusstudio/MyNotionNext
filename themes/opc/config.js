@@ -2,9 +2,9 @@ const CONFIG = {
   OPC_NAME: 'Klarraum · Psychology · 走进你的心理世界',
   OPC_KICKER: 'Psychologische Bildung · Leben in Deutschland',
   OPC_TITLE: 'Klarer sehen. Besser leben.',
-  OPC_SUBTITLE: 'Psychologische Orientierung für dein Leben · 看懂自己 更好生活',
+  OPC_SUBTITLE: 'Psychologische Orientierung für dein Leben\n看懂自己 更好生活',
   OPC_DESCRIPTION:
-    "Manchmal braucht es nur einen neuen Blickwinkel, um festgefahrene Gedanken zu lösen. Ob im Beruf, in Beziehungen oder im Umgang mit uns selbst – hier geht es darum, sich selbst und andere besser zu verstehen, innere Klarheit zu gewinnen und das Leben bewusster und erfüllter zu gestalten. Sometimes, all it takes is a fresh perspective to break free from what holds us back. Whether it's work, relationships, or our own inner struggles, this is a space to better understand ourselves and others, find clarity, and live a more conscious and fulfilling life.",
+    "Manchmal braucht es nur einen neuen Blickwinkel, um festgefahrene Gedanken zu lösen. Ob im Beruf, in Beziehungen oder im Umgang mit uns selbst – hier geht es darum, sich selbst und andere besser zu verstehen, innere Klarheit zu gewinnen und das Leben bewusster und erfüllter zu gestalten.\n\nSometimes, all it takes is a fresh perspective to break free from what holds us back. Whether it's work, relationships, or our own inner struggles, this is a space to better understand ourselves and others, find clarity, and live a more conscious and fulfilling life.",
   OPC_PRIMARY_TEXT: 'Beiträge entdecken 探索',
   OPC_PRIMARY_URL: '/archive',
   OPC_SECONDARY_TEXT: 'Über mich 关于我',
