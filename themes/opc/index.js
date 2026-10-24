@@ -11,7 +11,6 @@ import { Moon, Sun } from '@/components/HeroIcons'
 import CONFIG from './config'
 
 const c = key => siteConfig(key, CONFIG[key], CONFIG)
-const list = key => String(c(key) || '').split(',').map(item => item.trim()).filter(Boolean)
 
 const ActionLink = ({ href, children, primary }) => (
   <SmartLink
@@ -72,13 +71,13 @@ const SERVICE_DETAILS = {
   量化交易: '策略观察 · 长期研究'
 }
 
-const ServiceCard = ({ name }) => (
-  <div className='opc-portal-card rounded-md border p-4'>
+const ServiceCard = ({ name, href }) => (
+  <SmartLink href={href} className='opc-portal-card block rounded-md border p-4 transition'>
     <div className='text-sm font-semibold'>{name}</div>
     <div className='opc-muted mt-2 text-xs leading-5'>
-      {SERVICE_DETAILS[name] || '持续实验和迭代'}
+      {SERVICE_DETAILS[name] || 'Beiträge ansehen · 查看文章 →'}
     </div>
-  </div>
+  </SmartLink>
 )
 
 const getPostHref = post => post?.href || (post?.slug ? `/${post.slug}` : '#')
@@ -179,7 +178,7 @@ const SiteCover = ({ src, title }) => {
   )
 }
 
-const NowPanel = () => (
+const NowPanel = ({ categoryOptions = [] }) => (
   <section className='opc-panel mx-auto max-w-6xl rounded-lg border p-5 md:p-6'>
     <div>
       <div className='opc-muted text-sm'>近期方向</div>
@@ -187,8 +186,8 @@ const NowPanel = () => (
     </div>
     <p className='opc-muted mt-4 text-sm leading-6'>{c('OPC_NOW_DESCRIPTION')}</p>
     <div className='mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4'>
-      {list('OPC_NOW_ITEMS').map(item => (
-        <ServiceCard key={item} name={item} />
+      {categoryOptions.map(category => (
+        <ServiceCard key={category.name} name={category.name} href={`/category/${encodeURIComponent(category.name)}`} />
       ))}
     </div>
   </section>
@@ -337,10 +336,65 @@ const Style = () => (
   `}</style>
 )
 
-const LayoutBase = ({ children }) => (
+const Navigation = ({ customMenu = [], customNav = [] }) => {
+  const { asPath } = useRouter()
+  const currentPath = asPath.split(/[?#]/)[0]
+  const menus = siteConfig('CUSTOM_MENU', true) && customMenu.length > 0
+    ? customMenu
+    : customNav
+  const linkClass = 'opc-secondary-action rounded-md border px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-blue-300'
+  const renderLink = item => (
+    <SmartLink
+      key={item.href}
+      href={item.href}
+      target={item.target}
+      aria-current={currentPath === item.href ? 'page' : undefined}
+      className={linkClass}>
+      {item.name || item.title}
+    </SmartLink>
+  )
+
+  return (
+    <header className='mx-auto max-w-6xl px-5 pt-6 md:px-10'>
+      <div className='flex flex-wrap items-center justify-between gap-4'>
+        <SmartLink href='/' className='text-sm font-semibold tracking-[0.12em]'>
+          {c('OPC_NAME')}
+        </SmartLink>
+        <span className='opc-status rounded-md px-2.5 py-1 text-xs font-medium'>{c('OPC_STATUS_TEXT')}</span>
+      </div>
+      <nav aria-label='Hauptnavigation · 主导航' className='mt-4 flex flex-wrap items-start gap-2'>
+        {[
+          { href: '/', name: 'Startseite 首页' },
+          { href: '/archive', name: 'Beiträge 文章' },
+          { href: '/category', name: 'Kategorien 分类' },
+          { href: '/tag', name: 'Tags 标签' },
+          { href: '/search', name: 'Suche 搜索' }
+        ].map(renderLink)}
+        {menus.filter(item => item.show !== false).map(item => {
+          const children = item.subMenus?.filter(child => child.show !== false && child.href && !['#', '/#'].includes(child.href)) || []
+          if (children.length > 0) {
+            return (
+              <details key={item.id || item.name || item.title} className='opc-panel rounded-md border p-2'>
+                <summary className='cursor-pointer px-1 text-sm'>{item.name || item.title}</summary>
+                <div className='mt-3 flex max-w-xs flex-col gap-2'>
+                  {item.href && !['#', '/#'].includes(item.href) && renderLink(item)}
+                  {children.map(renderLink)}
+                </div>
+              </details>
+            )
+          }
+          return item.href && !['#', '/#'].includes(item.href) ? renderLink(item) : null
+        })}
+      </nav>
+    </header>
+  )
+}
+
+const LayoutBase = ({ children, ...props }) => (
   <div id='theme-opc' className={`${siteConfig('FONT_STYLE')} min-h-screen`}>
     <Style />
     <OpcDarkModeButton />
+    <Navigation {...props} />
     {children}
     <OpcFooter />
   </div>
@@ -354,13 +408,6 @@ const LayoutIndex = props => {
 
   return (
     <main className='min-h-screen overflow-hidden px-5 py-6 md:px-10'>
-      <nav className='mx-auto flex max-w-6xl items-center justify-between'>
-        <SmartLink href='/' className='text-sm font-semibold tracking-[0.12em]'>
-          {c('OPC_NAME')}
-        </SmartLink>
-        <span className='opc-status rounded-md px-2.5 py-1 text-xs font-medium'>{c('OPC_STATUS_TEXT')}</span>
-      </nav>
-
       <section className='mx-auto grid min-h-[calc(100vh-72px)] max-w-6xl items-center gap-8 py-10 lg:grid-cols-[1.08fr_0.92fr] lg:gap-16 lg:py-12'>
         <div>
           <div className='opc-kicker mb-6 inline-flex rounded-md border px-3 py-2 text-xs font-medium tracking-[0.12em]'>
@@ -422,7 +469,16 @@ const LayoutIndex = props => {
             </div>
           </div>
         </section>
-        <NowPanel />
+        <NowPanel categoryOptions={props.categoryOptions} />
+        <section className='opc-panel mx-auto mt-6 max-w-6xl rounded-lg border p-5 md:p-6'>
+          <div className='mb-5 flex flex-wrap items-center justify-between gap-3'>
+            <h2 className='text-xl font-semibold'>Beiträge · 文章</h2>
+            <SmartLink href='/archive' className='text-sm underline underline-offset-4'>Alle Beiträge · 查看全部 →</SmartLink>
+          </div>
+          <div className='grid gap-3 sm:grid-cols-2'>
+            {(props.posts || []).slice(0, 6).map(post => <PostCard key={post.id || post.slug} post={post} />)}
+          </div>
+        </section>
       </div>
     </main>
   )
@@ -434,6 +490,11 @@ const LayoutSlug = props => (
       {props.post ? (
         <>
           <NotionPage {...props} />
+          <nav aria-label='Beitragsnavigation · 文章导航' className='mt-8 flex flex-wrap justify-between gap-4 border-t pt-5 text-sm'>
+            {props.prev && <SmartLink href={getPostHref(props.prev)}>← {props.prev.title}</SmartLink>}
+            <SmartLink href='/archive'>Alle Beiträge · 全部文章</SmartLink>
+            {props.next && <SmartLink href={getPostHref(props.next)}>{props.next.title} →</SmartLink>}
+          </nav>
           <ShareBar post={props.post} />
           <Comment frontMatter={props.post} />
         </>
@@ -460,15 +521,26 @@ const LayoutPostList = props => {
   )
 }
 
-const LayoutSearch = props => (
+const LayoutSearch = props => {
+  const router = useRouter()
+  return (
   <PageShell title='搜索结果' description={props.keyword ? `关键词：${props.keyword}` : '站内搜索结果。'}>
+    <form className='mb-6 flex gap-2' onSubmit={event => {
+      event.preventDefault()
+      const keyword = String(new FormData(event.currentTarget).get('keyword') || '').trim()
+      if (keyword) router.push(`/search/${encodeURIComponent(keyword)}`)
+    }}>
+      <input key={props.keyword} type='search' name='keyword' aria-label='Suchbegriff · 搜索关键词' defaultValue={props.keyword || ''} required className='opc-secondary-action min-w-0 flex-1 rounded-md border px-3 py-2' />
+      <button type='submit' className='opc-primary-action rounded-md px-4 py-2'>Suche 搜索</button>
+    </form>
     <div id='posts-wrapper' className='grid gap-4'>
       {(props.posts || []).length > 0
         ? props.posts.map(post => <PostCard key={post.id || post.slug || post.title} post={post} />)
         : <EmptyState title='没有找到匹配内容' />}
     </div>
   </PageShell>
-)
+  )
+}
 
 const LayoutArchive = props => (
   <PageShell title='归档' description='按时间整理的长期记录。'>
