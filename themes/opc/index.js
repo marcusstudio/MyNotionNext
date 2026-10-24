@@ -512,7 +512,7 @@ const LayoutPostList = props => {
   const posts = props.posts || []
 
   return (
-    <PageShell title='长期记录' description='AI、产品、写作和一人公司实验的公开记录。'>
+    <PageShell title={props.category || props.tag || 'Beiträge · 文章'} description='Psychologische Bildung und persönliche Erfahrungen · 心理学科普与个人分享'>
       <div id='posts-wrapper' className='grid gap-4'>
         {posts.length > 0 ? posts.map(post => <PostCard key={post.id || post.slug || post.title} post={post} />) : <EmptyState />}
       </div>

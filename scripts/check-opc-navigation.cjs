@@ -34,7 +34,7 @@ vm.runInNewContext(compiled, {
     throw new Error(`Unexpected import: ${name}`)
   }
 })
-const { LayoutBase, LayoutIndex, LayoutSlug, LayoutSearch } = testModule.exports
+const { LayoutBase, LayoutIndex, LayoutSlug, LayoutSearch, LayoutPostList } = testModule.exports
 const render = (component, props) => renderToStaticMarkup(React.createElement(component, props))
 const menu = [
   { title: 'About', href: '/about' },
@@ -55,6 +55,8 @@ const post = { id: 'post', title: 'Article', href: '/article/example' }
 const homepage = render(LayoutIndex, { categoryOptions: [{ name: 'Blogs & Vlogs' }], posts: [post] })
 assert(homepage.includes('href="/category/Blogs%20%26%20Vlogs"'))
 assert(homepage.includes('href="/article/example"'))
+assert(render(LayoutPostList, { category: 'Psychology Insights', posts: [] }).includes('Psychology Insights</h1>'))
+assert(render(LayoutPostList, { tag: 'Nature', posts: [] }).includes('Nature</h1>'))
 const article = render(LayoutSlug, { post, prev: { title: 'Previous', href: '/article/previous' }, next: { title: 'Next', href: '/article/next' } })
 assert(article.includes('href="/article/previous"') && article.includes('href="/article/next"'))
 const search = LayoutSearch({ posts: [] })
