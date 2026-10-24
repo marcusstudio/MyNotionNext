@@ -10,6 +10,7 @@ import { themeConsoleStyle } from '@/lib/themeConsoleStyle'
 import { useRouter } from 'next/router'
 import { Moon, Sun } from '@/components/HeroIcons'
 import CONFIG from './config'
+import { useState } from 'react'
 
 const c = key => siteConfig(key, CONFIG[key], CONFIG)
 
@@ -30,10 +31,11 @@ const OpcFooter = () => (
   <footer className='opc-footer px-5 pb-8 text-xs md:px-10'>
     <div className='mx-auto flex max-w-6xl flex-col gap-2 border-t pt-5 sm:flex-row sm:items-center sm:justify-between'>
       <div className='opc-muted'>
-        <SmartLink href='https://qizhang.vercel.app/about/'>About the Author</SmartLink> Exploration Never Ends
+        <SmartLink href='/about'>Über mich</SmartLink> · Psychologie im Alltag
       </div>
       <div className='flex flex-wrap gap-3'>
-        <SmartLink href='https://soulstudio.vercel.app/'>中文版</SmartLink>
+        {process.env.NODE_ENV === 'development' && <span>Lokale OPC-Vorschau</span>}
+        <SmartLink href='https://soulstudio.vercel.app/'>中文</SmartLink>
       </div>
     </div>
   </footer>
@@ -51,9 +53,9 @@ const SERVICE_DETAILS = {
 
 const ServiceCard = ({ name, href }) => (
   <SmartLink href={href} className='opc-portal-card block rounded-md border p-4 transition'>
-    <div className='text-sm font-semibold'>{name}</div>
+    <div className='text-sm font-semibold'>{{ 'Psychology Insights': 'Psychologische Impulse', 'Photographic Works': 'Fotografie & Perspektiven', 'Blogs & Vlogs': 'Persönliche Gedanken' }[name] || name}</div>
     <div className='opc-muted mt-2 text-xs leading-5'>
-      {SERVICE_DETAILS[name] || 'Beiträge ansehen · 查看文章 →'}
+      {SERVICE_DETAILS[name] || 'Beiträge entdecken →'}
     </div>
   </SmartLink>
 )
@@ -113,33 +115,6 @@ const PageShell = ({ title, description, children }) => (
   </main>
 )
 
-const getIconSrc = icon =>
-  typeof icon === 'string' && icon.startsWith('/icons/')
-    ? `https://www.notion.so${icon}`
-    : icon
-
-const SiteIcon = ({ icon, title }) => {
-  const iconSrc = getIconSrc(icon)
-
-  if (typeof iconSrc === 'string' && (iconSrc.startsWith('http') || iconSrc.startsWith('data:') || iconSrc.startsWith('/'))) {
-    return (
-      <LazyImage
-        priority
-        src={iconSrc}
-        fallbackSrc='/avatar.svg'
-        alt={title}
-        className='h-16 w-16 rounded-md object-cover'
-      />
-    )
-  }
-
-  return (
-    <div className='flex h-16 w-16 items-center justify-center rounded-md text-3xl'>
-      {iconSrc || 'T'}
-    </div>
-  )
-}
-
 const SiteCover = ({ src, title }) => {
   if (!src) return null
 
@@ -157,12 +132,12 @@ const SiteCover = ({ src, title }) => {
 }
 
 const NowPanel = ({ categoryOptions = [] }) => (
-  <section className='opc-panel mx-auto max-w-6xl rounded-lg border p-5 md:p-6'>
+  <section className='opc-topics opc-panel mx-auto max-w-6xl rounded-lg border p-5 md:p-6'>
     <div>
       <h2 className='mt-1 text-xl font-semibold'>{c('OPC_NOW_TITLE')}</h2>
     </div>
     <p className='opc-muted mt-4 text-sm leading-6'>{c('OPC_NOW_DESCRIPTION')}</p>
-    <div className='mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4'>
+    <div className='mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
       {categoryOptions.map(category => (
         <ServiceCard key={category.name} name={category.name} href={`/category/${encodeURIComponent(category.name)}`} />
       ))}
@@ -177,7 +152,7 @@ const OpcDarkModeButton = () => {
     <button
       type='button'
       onClick={toggleDarkMode}
-      aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-label={isDarkMode ? 'Helle Ansicht einschalten' : 'Dunkle Ansicht einschalten'}
       title={isDarkMode ? 'Light mode' : 'Dark mode'}
       className='opc-dark-mode-button fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-md border transition focus:outline-none focus:ring-2 focus:ring-offset-2 md:bottom-8 md:right-8'>
       <span className='h-5 w-5'>{isDarkMode ? <Sun /> : <Moon />}</span>
@@ -190,11 +165,7 @@ const Style = () => (
     ${themeConsoleStyle('opc', CONFIG)}
 
     #theme-opc {
-      background:
-        linear-gradient(90deg, color-mix(in srgb, var(--opc-console-border) 46%, transparent) 1px, transparent 1px),
-        linear-gradient(color-mix(in srgb, var(--opc-console-border) 40%, transparent) 1px, transparent 1px),
-        linear-gradient(135deg, var(--opc-console-bg) 0%, color-mix(in srgb, var(--opc-console-bg) 80%, var(--opc-console-card)) 55%, color-mix(in srgb, var(--opc-console-primary) 5%, var(--opc-console-bg)) 100%);
-      background-size: 72px 72px, 72px 72px, auto;
+      background: var(--opc-console-bg);
       color: var(--opc-console-text);
     }
 
@@ -283,12 +254,7 @@ const Style = () => (
     }
 
     .dark #theme-opc {
-      background:
-        radial-gradient(circle at 18% 18%, color-mix(in srgb, var(--opc-console-primary) 18%, transparent) 0, transparent 28%),
-        linear-gradient(90deg, color-mix(in srgb, var(--opc-console-border) 44%, transparent) 1px, transparent 1px),
-        linear-gradient(color-mix(in srgb, var(--opc-console-border) 34%, transparent) 1px, transparent 1px),
-        linear-gradient(135deg, var(--opc-console-bg) 0%, #07111f 56%, #030712 100%);
-      background-size: auto, 72px 72px, 72px 72px, auto;
+      background: var(--opc-console-bg);
     }
 
     .dark #theme-opc .opc-panel {
@@ -310,16 +276,60 @@ const Style = () => (
     .dark #theme-opc .notion {
       color: var(--opc-console-text);
     }
+
+    #theme-opc { font-family: 'Segoe UI', Arial, sans-serif; font-weight: 400; }
+    #theme-opc .opc-panel { box-shadow: none; }
+    #theme-opc .opc-primary-action { box-shadow: none; }
+    #theme-opc .opc-brand { font-size: 25px; letter-spacing: -.6px; }
+    #theme-opc .opc-brand-caption { display: block; margin-top: 4px; font-size: 10px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--opc-console-text-secondary); }
+    #theme-opc .opc-header-top { min-height: 54px; }
+    #theme-opc .opc-header { padding-bottom: 20px; border-bottom: 1px solid var(--opc-console-border); }
+    #theme-opc .opc-menu-toggle { display: none; border: 1px solid var(--opc-console-border); border-radius: 6px; padding: 7px 13px; background: var(--opc-console-card); font-size: 13px; }
+    #theme-opc .opc-home { padding-top: 0; }
+    #theme-opc .opc-hero { align-content: center; padding-top: 44px; padding-bottom: 48px; gap: 64px; }
+    #theme-opc .opc-hero-label { margin-bottom: 20px; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--opc-console-primary); }
+    #theme-opc .opc-hero h1 { font-size: clamp(42px, 4.8vw, 66px); line-height: 1.08; letter-spacing: -2px; max-width: 650px; }
+    #theme-opc .opc-hero-subtitle { max-width: 490px; font-size: 21px; line-height: 1.5; font-weight: 500; }
+    #theme-opc .opc-hero-description { max-width: 485px; line-height: 1.85; }
+    #theme-opc .opc-hero-note { margin-top: 24px; font-size: 11px; letter-spacing: .04em; }
+    #theme-opc .opc-hero-card { padding: 24px; border-radius: 10px; }
+    #theme-opc .opc-hero-card .opc-cover { margin: 20px 0; aspect-ratio: 16 / 9; border: 0; }
+    #theme-opc .opc-home .opc-section-label { margin-bottom: 8px; font-size: 10px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; }
+    #theme-opc .opc-topics { padding: 29px; background: transparent; border: 0; border-top: 1px solid var(--opc-console-border); border-radius: 0; }
+    #theme-opc .opc-topics .opc-portal-card { padding: 25px 22px; min-height: 112px; }
+    #theme-opc .opc-about { margin: 10px auto 32px; padding: 30px; border-radius: 9px; background: color-mix(in srgb, var(--opc-console-primary) 6%, var(--opc-console-bg)); }
+    #theme-opc .opc-about p { max-width: 740px; line-height: 1.9; }
+    #theme-opc .opc-posts { background: transparent; border: 0; padding: 10px 0 24px; }
+    #theme-opc .opc-posts .opc-portal-card { box-shadow: none; }
+    @media (max-width: 767px) {
+      #theme-opc .opc-menu-toggle { display: block; }
+      #theme-opc .opc-main-nav { display: none; }
+      #theme-opc .opc-main-nav.is-open { display: flex; }
+      #theme-opc .opc-main-nav > a, #theme-opc .opc-main-nav > details { flex-basis: 42%; }
+      #theme-opc .opc-header .opc-status { display: none; }
+      #theme-opc .opc-brand-caption { max-width: 220px; font-size: 9px; letter-spacing: .06em; }
+      #theme-opc .opc-header { padding-top: 14px; padding-bottom: 14px; }
+      #theme-opc .opc-hero { min-height: 0; padding-top: 36px; padding-bottom: 32px; gap: 30px; }
+      #theme-opc .opc-hero h1 { font-size: 43px; letter-spacing: -1.4px; }
+      #theme-opc .opc-hero-subtitle { font-size: 18px; }
+      #theme-opc .opc-hero-description { font-size: 15px; }
+      #theme-opc .opc-hero-card { padding: 20px; }
+      #theme-opc .opc-topics { padding: 25px 0; }
+      #theme-opc .opc-about { padding: 23px; }
+      #theme-opc .opc-posts > div:first-child { align-items: start; flex-direction: column; }
+    }
   `}</style>
 )
 
 const Navigation = ({ customMenu = [], customNav = [] }) => {
   const { asPath } = useRouter()
+  const [menuOpen, setMenuOpen] = useState(false)
   const currentPath = asPath.split(/[?#]/)[0]
   const menus = siteConfig('CUSTOM_MENU', true) && customMenu.length > 0
     ? customMenu
     : customNav
   const linkClass = 'opc-secondary-action rounded-md border px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-blue-300'
+  const labels = { Home: 'Startseite', Search: 'Suche', 'Beiträge (文章)': 'Beiträge', 'Psy.Counseling (諮商)': 'Geschichten', 'Psy.Tests (心理測驗)': 'Persönlichkeit', 'Categories (分類)': 'Themen', 'Contract (联系)': 'Kontakt', 'Contact (联系)': 'Kontakt', 'Psychology Insides': 'Psychologische Impulse', 'Photography Works': 'Fotografie', 'More Tags': 'Alle Schlagwörter' }
   const renderLink = item => (
     <SmartLink
       key={item.href}
@@ -327,25 +337,27 @@ const Navigation = ({ customMenu = [], customNav = [] }) => {
       target={item.target}
       aria-current={currentPath === item.href ? 'page' : undefined}
       className={linkClass}>
-      {item.name || item.title}
+      {labels[item.name || item.title] || item.name || item.title}
     </SmartLink>
   )
 
   return (
-    <header className='mx-auto max-w-[1232px] px-5 pt-6 md:px-10'>
-      <div className='flex flex-wrap items-center justify-between gap-4'>
-        <SmartLink href='/' className='text-sm font-semibold tracking-[0.12em]'>
+    <header className='opc-header mx-auto max-w-[1232px] px-5 pt-6 md:px-10'>
+      <div className='opc-header-top flex flex-wrap items-center justify-between gap-4'>
+        <SmartLink href='/' className='opc-brand font-semibold'>
           {c('OPC_NAME')}
+          <span className='opc-brand-caption'>Psychologisches Wissen & persönliche Perspektiven</span>
         </SmartLink>
         <span className='opc-status rounded-md px-2.5 py-1 text-xs font-medium'>{c('OPC_STATUS_TEXT')}</span>
+        <button type='button' className='opc-menu-toggle' aria-expanded={menuOpen} aria-controls='opc-main-nav' onClick={() => setMenuOpen(!menuOpen)}>Menü ☰</button>
       </div>
-      <nav aria-label='Hauptnavigation · 主导航' className='mt-4 flex flex-wrap items-start gap-2 [&>a]:flex-1 [&>a]:text-center [&>a]:whitespace-nowrap [&>details]:flex-1 [&>details]:text-center'>
+      <nav id='opc-main-nav' aria-label='Hauptnavigation' onClick={event => { if (event.target.closest('a')) setMenuOpen(false) }} className={`opc-main-nav ${menuOpen ? 'is-open' : ''} mt-4 flex flex-wrap items-start gap-2 [&>a]:flex-1 [&>a]:text-center [&>a]:whitespace-nowrap [&>details]:flex-1 [&>details]:text-center`}>
         {menus.filter(item => item.show !== false).map(item => {
           const children = item.subMenus?.filter(child => child.show !== false && child.href && !['#', '/#'].includes(child.href)) || []
           if (children.length > 0) {
             return (
               <details key={item.id || item.name || item.title} className='opc-panel relative rounded-md border p-2'>
-                <summary className='cursor-pointer px-1 text-sm'>{item.name || item.title}</summary>
+                <summary className='cursor-pointer px-1 text-sm'>{labels[item.name || item.title] || item.name || item.title}</summary>
                 <div className='opc-panel absolute right-0 top-full z-50 mt-2 flex w-64 flex-col gap-2 rounded-md border p-3 shadow-xl'>
                   {item.href && !['#', '/#'].includes(item.href) && renderLink(item)}
                   {children.map(renderLink)}
@@ -373,18 +385,18 @@ const LayoutBase = ({ children, ...props }) => (
 const LayoutIndex = props => {
   const homeTitle = props?.homePage?.title || c('OPC_TITLE')
   const homeDescription = props?.homePage?.summary || c('OPC_DESCRIPTION')
-  const siteIcon = props?.siteInfo?.icon || siteConfig('AVATAR', '/avatar.svg', props?.NOTION_CONFIG) || '/avatar.svg'
   const siteCover = props?.siteInfo?.pageCover || siteConfig('HOME_BANNER_IMAGE', '', props?.NOTION_CONFIG)
 
   return (
-    <main className='min-h-screen overflow-hidden px-5 py-6 md:px-10'>
-      <section className='mx-auto mb-6 grid min-h-[calc(100svh-120px)] max-w-6xl content-start items-start gap-6 py-4 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-6'>
+    <main className='opc-home min-h-screen px-5 py-6 md:px-10'>
+      <section className='opc-hero mx-auto mb-6 grid min-h-[calc(100svh-160px)] max-w-6xl content-start items-center gap-6 py-4 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-6'>
         <div>
-          <h1 className='max-w-3xl text-5xl font-semibold leading-[1.02] sm:text-6xl lg:text-7xl'>
+          <div className='opc-hero-label'>Ein neuer Blick auf dich selbst</div>
+          <h1 className='max-w-3xl whitespace-pre-line text-5xl font-semibold leading-[1.02] sm:text-6xl lg:text-7xl'>
             {homeTitle}
           </h1>
-          <div className='mt-5 whitespace-pre-line text-xl font-semibold sm:text-2xl'>{c('OPC_SUBTITLE')}</div>
-          <p className='opc-muted mt-4 max-w-2xl whitespace-pre-line text-base leading-7'>
+          <div className='opc-hero-subtitle mt-5 whitespace-pre-line text-xl font-semibold sm:text-2xl'>{c('OPC_SUBTITLE')}</div>
+          <p className='opc-hero-description opc-muted mt-4 max-w-2xl whitespace-pre-line text-base leading-7'>
             {homeDescription}
           </p>
           <div className='mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row'>
@@ -393,13 +405,13 @@ const LayoutIndex = props => {
             </ActionLink>
             <ActionLink href={c('OPC_SECONDARY_URL')}>{c('OPC_SECONDARY_TEXT')}</ActionLink>
           </div>
+          <p className='opc-hero-note opc-muted'>Verständlich. Reflektiert. Nah am Leben.</p>
         </div>
 
-        <aside className='opc-panel rounded-lg border p-5 backdrop-blur'>
+        <aside className='opc-hero-card opc-panel rounded-lg border p-5 backdrop-blur'>
           <div className='opc-divider flex items-center gap-4 border-b pb-5'>
-            <SiteIcon icon={siteIcon} title={c('OPC_TITLE')} />
             <div>
-              <div className='opc-muted text-sm'>Unser gemeinsames Ziel</div>
+              <div className='opc-section-label opc-muted'>Psychologie im Alltag</div>
               <div className='mt-1 text-xl font-semibold'>{c('OPC_CARD_TITLE')}</div>
             </div>
           </div>
@@ -407,7 +419,6 @@ const LayoutIndex = props => {
           <SiteCover src={siteCover} title={c('OPC_TITLE')} />
 
           <div className='opc-divider border-t pt-5'>
-            <div className='mb-2 text-sm font-semibold'>Meine Rolle</div>
             <p className='opc-muted text-sm leading-6'>{c('OPC_CARD_DESCRIPTION')}</p>
           </div>
         </aside>
@@ -420,15 +431,22 @@ const LayoutIndex = props => {
       )}
       <div className='pb-10 md:pb-14'>
         <NowPanel categoryOptions={props.categoryOptions} />
-        <section className='opc-panel mx-auto mt-6 max-w-6xl rounded-lg border p-5 md:p-6'>
+        <section className='opc-about mx-auto max-w-6xl'>
+          <div className='opc-section-label opc-muted'>Der Mensch hinter Klarraum</div>
+          <h2 className='text-xl font-semibold'>Hallo, ich bin Marcus.</h2>
+          <p className='opc-muted mt-3 text-sm'>Mich interessiert, wie wir uns selbst und andere besser verstehen können. Hier teile ich psychologisches Wissen und persönliche Gedanken zu Beziehungen, Selbstfürsorge und den kleinen Veränderungen im Alltag.</p>
+          <SmartLink href='/about' className='mt-4 inline-block text-sm font-semibold underline underline-offset-4'>Mehr über mich →</SmartLink>
+        </section>
+        <section className='opc-posts opc-panel mx-auto mt-6 max-w-6xl rounded-lg border p-5 md:p-6'>
           <div className='mb-5 flex flex-wrap items-center justify-between gap-3'>
-            <h2 className='text-xl font-semibold'>Beiträge · 文章</h2>
-            <SmartLink href='/archive' className='text-sm underline underline-offset-4'>Alle Beiträge · 查看全部 →</SmartLink>
+            <h2 className='text-xl font-semibold'>Gedanken zum Weiterlesen</h2>
+            <SmartLink href='/archive' className='text-sm underline underline-offset-4'>Alle Beiträge →</SmartLink>
           </div>
-          <div className='grid gap-3 sm:grid-cols-2'>
-            {(props.posts || []).slice(0, 6).map(post => <PostCard key={post.id || post.slug} post={post} />)}
+          <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+            {(props.posts || []).slice(0, 3).map(post => <PostCard key={post.id || post.slug} post={post} />)}
           </div>
         </section>
+        <p className='opc-muted mx-auto mt-6 max-w-6xl text-xs leading-6'>Die Inhalte dienen der Information und Selbstreflexion. Sie ersetzen keine individuelle Diagnose oder Behandlung.</p>
       </div>
     </main>
   )
