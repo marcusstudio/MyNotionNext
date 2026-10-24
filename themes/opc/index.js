@@ -339,12 +339,7 @@ const Navigation = ({ customMenu = [], customNav = [] }) => {
         </SmartLink>
         <span className='opc-status rounded-md px-2.5 py-1 text-xs font-medium'>{c('OPC_STATUS_TEXT')}</span>
       </div>
-      <nav aria-label='Hauptnavigation · 主导航' className='mt-4 flex flex-wrap items-start gap-2'>
-        {[
-          { href: '/', name: 'Start首页' },
-          { href: '/search', name: 'Suche 搜索' },
-          { href: '/archive', name: 'Beiträge 文章' }
-        ].map(renderLink)}
+      <nav aria-label='Hauptnavigation · 主导航' className='mt-4 flex flex-wrap items-stretch gap-2 [&>a]:flex-1 [&>a]:text-center [&>a]:whitespace-nowrap [&>details]:flex-1 [&>details]:text-center'>
         {menus.filter(item => item.show !== false).map(item => {
           const children = item.subMenus?.filter(child => child.show !== false && child.href && !['#', '/#'].includes(child.href)) || []
           if (children.length > 0) {
@@ -383,7 +378,7 @@ const LayoutIndex = props => {
 
   return (
     <main className='min-h-screen overflow-hidden px-5 py-6 md:px-10'>
-      <section className='mx-auto mb-4 grid max-w-6xl items-start gap-6 py-4 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-6'>
+      <section className='mx-auto mb-6 grid min-h-[calc(100svh-120px)] max-w-6xl content-start items-start gap-6 py-4 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10 lg:py-6'>
         <div>
           <h1 className='max-w-3xl text-5xl font-semibold leading-[1.02] sm:text-6xl lg:text-7xl'>
             {homeTitle}
