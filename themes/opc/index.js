@@ -451,7 +451,7 @@ const LayoutSlug = props => (
           <NotionPage {...props} />
           <nav aria-label='Beitragsnavigation · 文章导航' className='mt-8 flex flex-wrap justify-between gap-4 border-t pt-5 text-sm'>
             {props.prev && <SmartLink href={getPostHref(props.prev)}>← {props.prev.title}</SmartLink>}
-            <SmartLink href='/archive'>Alle Beiträge · 全部文章</SmartLink>
+            <SmartLink href='/archive'>Alle Beiträge</SmartLink>
             {props.next && <SmartLink href={getPostHref(props.next)}>{props.next.title} →</SmartLink>}
           </nav>
           <ShareBar post={props.post} />
