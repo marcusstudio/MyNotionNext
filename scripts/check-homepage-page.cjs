@@ -1,0 +1,10 @@
+const assert = require('node:assert/strict')
+const fs = require('node:fs')
+const path = require('node:path')
+const source = fs.readFileSync(path.join(__dirname, '../pages/index.js'), 'utf8')
+const predicate = source.match(/props\.allPages\?\.find\((page =>[\s\S]*?)\n  \)/)[1]
+const isHomepage = require('node:vm').runInNewContext(`(${predicate})`)
+assert.equal(isHomepage({ title: 'Startseite', type: 'Menu', status: 'Published' }), false)
+assert.equal(isHomepage({ title: 'Startseite / 首页', type: 'Page', status: 'Draft' }), false)
+assert.equal(isHomepage({ title: 'Startseite / 首页', type: 'Page', status: 'Published' }), true)
+console.log('Homepage selection: menu and draft excluded, published page accepted')

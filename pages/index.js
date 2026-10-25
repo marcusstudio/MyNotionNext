@@ -69,9 +69,9 @@ export async function getStaticProps(req) {
     page => page.type === 'Post' && page.status === 'Published'
   )
 
-  // The formal homepage is maintained in Notion. Its title/summary and body
-  // override the theme defaults while keeping a safe fallback for old data.
+  // Only a published content page may supply the optional homepage body.
   const homePage = props.allPages?.find(page =>
+    page.type === 'Page' && page.status === 'Published' &&
     ['Startseite / 首页', 'Startseite', '首页'].includes(page.title)
   )
   if (homePage?.id) {
