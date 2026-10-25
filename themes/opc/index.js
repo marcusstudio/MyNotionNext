@@ -544,7 +544,7 @@ const LayoutTagIndex = props => (
 
 const Layout404 = () => (
   <PageShell title='Page Not Found' description='No content was found for this URL.'>
-    <ActionLink href='/' primary>返回首页</ActionLink>
+    <ActionLink href='/' primary>Zurück zur Startseite</ActionLink>
   </PageShell>
 )
 
