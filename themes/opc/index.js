@@ -449,7 +449,7 @@ const LayoutSlug = props => (
       ) : props.post ? (
         <>
           <NotionPage {...props} />
-          <nav aria-label='Beitragsnavigation · 文章导航' className='mt-8 flex flex-wrap justify-between gap-4 border-t pt-5 text-sm'>
+          <nav aria-label='Beitragsnavigation' className='mt-8 flex flex-wrap justify-between gap-4 border-t pt-5 text-sm'>
             {props.prev && <SmartLink href={getPostHref(props.prev)}>← {props.prev.title}</SmartLink>}
             <SmartLink href='/archive'>Alle Beiträge</SmartLink>
             {props.next && <SmartLink href={getPostHref(props.next)}>{props.next.title} →</SmartLink>}
@@ -458,20 +458,20 @@ const LayoutSlug = props => (
           <Comment frontMatter={props.post} />
         </>
       ) : (
-        <EmptyState title='没有找到内容' />
+        <EmptyState title='Derzeit kein Inhalt gefunden.' />
       )}
     </article>
   </main>
 )
 
 const EmptyPage = () => <LayoutIndex />
-const EmptyState = ({ title = '暂无内容' }) => <div className='opc-muted rounded-md border border-dashed p-8 text-center text-sm'>{title}</div>
+const EmptyState = ({ title = 'Derzeit kein Inhalt' }) => <div className='opc-muted rounded-md border border-dashed p-8 text-center text-sm'>{title}</div>
 
 const LayoutPostList = props => {
   const posts = props.posts || []
 
   return (
-    <PageShell title={props.category || props.tag || 'Beiträge · 文章'} description='Psychologische Bildung und persönliche Erfahrungen · 心理学科普与个人分享'>
+    <PageShell title={props.category || props.tag || 'Beiträge'} description='Klarer sehen, Besser leben.'>
       <div id='posts-wrapper' className='grid gap-4'>
         {posts.length > 0 ? posts.map(post => <PostCard key={post.id || post.slug || post.title} post={post} />) : <EmptyState />}
       </div>
