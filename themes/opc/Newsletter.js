@@ -36,6 +36,9 @@ export default function Newsletter({ formUrl }) {
           border-color: var(--opc-console-border);
           background: color-mix(in srgb, var(--opc-console-primary) 6%, var(--opc-console-bg));
         }
+        :global(.dark) .opc-newsletter iframe {
+          filter: invert(1) hue-rotate(180deg);
+        }
         @media (min-width: 768px) {
           .opc-newsletter { grid-template-columns: 1fr 1fr; gap: 48px; }
         }
