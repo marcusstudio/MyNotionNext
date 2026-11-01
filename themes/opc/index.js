@@ -10,6 +10,7 @@ import { themeConsoleStyle } from '@/lib/themeConsoleStyle'
 import { useRouter } from 'next/router'
 import { Moon, Sun } from '@/components/HeroIcons'
 import CONFIG from './config'
+import Newsletter from './Newsletter'
 import { useState } from 'react'
 
 const c = key => siteConfig(key, CONFIG[key], CONFIG)
@@ -435,6 +436,7 @@ const LayoutIndex = props => {
             {(props.posts || []).slice(0, 3).map(post => <PostCard key={post.id || post.slug} post={post} />)}
           </div>
         </section>
+        <Newsletter formUrl={c('OPC_MAILERLITE_FORM_URL')} />
         <p className='opc-muted mx-auto mt-6 max-w-6xl text-xs leading-6'>{c('OPC_CONTENT_NOTICE')}</p>
       </div>
     </main>

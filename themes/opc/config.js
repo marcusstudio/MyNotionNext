@@ -26,6 +26,7 @@ const CONFIG = {
   OPC_ABOUT_LINK_TEXT: "Mehr über mich →",
   OPC_POSTS_TITLE: "Gedanken zum Weiterlesen",
   OPC_POSTS_LINK_TEXT: "Alle Beiträge →",
+  OPC_MAILERLITE_FORM_URL: 'https://preview.mailerlite.io/forms/2760741/202966429844113039/share', // MailerLite 表单 Overview 中的 Share url
   OPC_CONTENT_NOTICE: "Die Inhalte dienen der Information und Selbstreflexion. Sie ersetzen keine individuelle Diagnose oder Behandlung.",
   OPC_CHINESE_TEXT: "中文",
   OPC_CHINESE_URL: "https://soulstudio.vercel.app/",
